@@ -22,6 +22,11 @@ async function sendToTokens(tokens: string[], push: Push) {
       data: push.data ?? {},
       android: { priority: "high", notification: { sound: "default" } },
       apns: { payload: { aps: { sound: "default" } } },
+      // web app (iPhone home-screen app, browsers): paths are on the worker app's own site
+      webpush: {
+        headers: { Urgency: "high" },
+        notification: { icon: "/icons/icon-192.png", badge: "/icons/badge-96.png" },
+      },
     });
     sent += res.successCount;
     res.responses.forEach((r, j) => {
